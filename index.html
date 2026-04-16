@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Copywriting Lab — Prof. Dr. Markus Rach</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f8f6f1;
+    --cream: #f0ece3;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --gold: #d4a843;
+    --gold-light: #f0d68a;
+    --blue: #2c3e6b;
+    --blue-light: #3d5a99;
+    --green: #27ae60;
+    --green-light: #2ecc71;
+    --muted: #7f8c8d;
+    --border: #d5cfc5;
+    --shadow: rgba(26,26,26,0.08);
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.01) 40px,
+      rgba(255,255,255,0.01) 80px
+    );
+    animation: drift 30s linear infinite;
+  }
+
+  @keyframes drift {
+    to { transform: translate(80px, 80px); }
+  }
+
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 em {
+    color: var(--red-light);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: rgba(248,246,241,0.65);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
+  }
+
+  .btn-start {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    background: var(--red);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-start:hover {
+    background: var(--red-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(192,57,43,0.35);
+  }
+
+  /* ── NAVIGATION ── */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    padding: 0.75rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .nav-title {
+    font-family: var(--font-display);
+    color: var(--paper);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .nav-progress {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(248,246,241,0.2);
+    transition: all 0.3s;
+  }
+
+  .nav-dot.active { background: var(--gold); transform: scale(1.3); }
+  .nav-dot.done { background: var(--green); }
+
+  /* ── SECTIONS ── */
+  .section {
+    display: none;
+    min-height: 100vh;
+    padding: 3rem 2rem;
+  }
+
+  .section.active { display: block; }
+
+  .section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-intro {
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    max-width: 650px;
+    font-weight: 300;
+  }
+
+  /* ── LAWS CARDS ── */
+  .laws-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .law-card {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 1.75rem 2rem;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .law-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+
+  .law-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+
+  .law-card:hover::before { background: var(--gold); }
+
+  .law-card.expanded::before { background: var(--red); }
+
+  .law-number {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .law-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .law-subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .law-detail {
+    display: none;
+    grid-column: 1 / -1;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+  }
+
+  .law-card.expanded .law-detail { display: block; }
+
+  .law-example {
+    background: var(--cream);
+    padding: 1.25rem;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--gold);
+  }
+
+  .law-example strong {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .law-bad { color: var(--red); text-decoration: line-through; opacity: 0.7; }
+  .law-good { color: var(--green); font-weight: 600; }
+
+  .btn-continue {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.85rem 2rem;
+    background: var(--blue);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    margin-top: 2.5rem;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-continue:hover {
+    background: var(--blue-light);
+    transform: translateY(-1px);
+  }
+
+  /* ── QUIZ ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .quiz-counter {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .quiz-score-bar {
+    display: flex;
+    gap: 4px;
+  }
+
+  .score-pip {
+    width: 28px;
+    height: 6px;
+    background: var(--border);
+    transition: background 0.4s;
+  }
+
+  .score-pip.correct { background: var(--green); }
+  .score-pip.wrong { background: var(--red); }
+
+  .quiz-card {
+    background: white;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .quiz-brand {
+    padding: 1rem 1.75rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .quiz-body {
+    padding: 2rem 1.75rem;
+  }
+
+  .quiz-prompt {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .copy-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 700px) {
+    .copy-options { grid-template-columns: 1fr; }
+  }
+
+  .copy-option {
+    border: 2px solid var(--border);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .copy-option:hover {
+    border-color: var(--blue);
+    box-shadow: 0 4px 15px var(--shadow);
+  }
+
+  .copy-option.selected {
+    border-color: var(--blue);
+    background: rgba(44,62,107,0.04);
+  }
+
+  .copy-option.revealed-correct {
+    border-color: var(--green);
+    background: rgba(39,174,96,0.06);
+  }
+
+  .copy-option.revealed-wrong {
+    border-color: var(--red);
+    background: rgba(192,57,43,0.04);
+    opacity: 0.7;
+  }
+
+  .copy-option-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .copy-text {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .copy-option .origin-badge {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .copy-option.revealed-correct .origin-badge,
+  .copy-option.revealed-wrong .origin-badge {
+    display: inline-block;
+  }
+
+  .badge-human {
+    background: var(--green);
+    color: white;
+  }
+
+  .badge-ai {
+    background: var(--red);
+    color: white;
+  }
+
+  .quiz-explanation {
+    display: none;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: var(--cream);
+    border-left: 4px solid var(--gold);
+  }
+
+  .quiz-explanation.visible { display: block; }
+
+  .explanation-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .explanation-text {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .quiz-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-vote {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    border: 2px solid var(--blue);
+    background: var(--blue);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-vote:hover { background: var(--blue-light); }
+  .btn-vote:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .btn-next {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-next:hover { background: #333; }
+
+  /* ── RESULTS ── */
+  .results-section {
+    min-height: 100vh;
+    display: none;
+    padding: 3rem 2rem;
+  }
+
+  .results-section.active { display: block; }
+
+  .results-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .results-score {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    margin-bottom: 2.5rem;
+  }
+
+  .results-number {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .results-of {
+    font-size: 1.2rem;
+    color: rgba(248,246,241,0.5);
+    margin-bottom: 1rem;
+  }
+
+  .results-verdict {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-style: italic;
+  }
+
+  .results-breakdown {
+    margin-bottom: 2rem;
+  }
+
+  .result-item {
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 0;
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .result-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .result-icon.correct { background: var(--green); }
+  .result-icon.wrong { background: var(--red); }
+
+  .result-brand {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .result-answer {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  .coca-cola-callout {
+    background: white;
+    border: 2px solid var(--red);
+    padding: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .coca-cola-callout h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    color: var(--red);
+  }
+
+  .coca-cola-callout p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #555;
+  }
+
+  .takeaway-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+
+  .takeaway-box h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .takeaway-box p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(248,246,241,0.75);
+  }
+
+  .btn-restart {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.85rem 2rem;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: all 0.3s;
+  }
+
+  .btn-restart:hover { background: var(--gold-light); }
+
+  .credit {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.5s ease-out forwards;
+  }
+
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .delay-4 { animation-delay: 0.4s; opacity: 0; }
+  .delay-5 { animation-delay: 0.5s; opacity: 0; }
+  .delay-6 { animation-delay: 0.6s; opacity: 0; }
+  .delay-7 { animation-delay: 0.7s; opacity: 0; }
+
+  /* ── PART III: AGENT ECONOMY ── */
+  .agent-section { display:none; min-height:100vh; background:#0a0e17; color:#c8d6e5; padding:0; }
+  .agent-section.active { display:block; }
+  .agent-hero { padding:4rem 2rem 3rem; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06); background:radial-gradient(ellipse at 50% 0%,rgba(0,200,150,0.06) 0%,transparent 60%); }
+  .agent-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.35em; text-transform:uppercase; color:#00c896; margin-bottom:1rem; }
+  .agent-hero h2 { font-family:var(--font-display); font-size:clamp(1.8rem,4.5vw,3rem); font-weight:900; color:#fff; line-height:1.15; margin-bottom:1rem; }
+  .agent-hero-sub { font-size:1rem; color:rgba(200,214,229,0.55); max-width:560px; margin:0 auto; font-weight:300; }
+  .agent-block { max-width:900px; margin:0 auto; padding:3rem 2rem; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .agent-block-label { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:#00c896; margin-bottom:0.75rem; }
+  .agent-block h3 { font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:#fff; margin-bottom:1rem; }
+  .agent-block p { font-size:0.92rem; line-height:1.75; color:rgba(200,214,229,0.7); margin-bottom:1rem; }
+  .agent-cite { font-family:var(--font-mono); font-size:0.7rem; color:rgba(0,200,150,0.6); border-left:2px solid rgba(0,200,150,0.3); padding-left:0.75rem; margin:1rem 0; }
+  .split-viz { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin:1.5rem 0; border:1px solid rgba(255,255,255,0.08); overflow:hidden; }
+  @media(max-width:600px){ .split-viz{grid-template-columns:1fr;} }
+  .split-side { padding:1.5rem; }
+  .split-functional { background:rgba(0,200,150,0.06); }
+  .split-hedonic { background:rgba(192,57,43,0.08); }
+  .split-header { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; margin-bottom:1rem; }
+  .split-functional .split-header { color:#00c896; }
+  .split-hedonic .split-header { color:var(--red-light); }
+  .split-item { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.85rem; }
+  .split-item-name { color:rgba(200,214,229,0.8); }
+  .agent-badge { font-family:var(--font-mono); font-size:0.6rem; padding:0.15rem 0.5rem; border-radius:2px; letter-spacing:0.1em; }
+  .agent-badge.taken { background:#00c896; color:#0a0e17; }
+  .agent-badge.human { background:rgba(192,57,43,0.7); color:white; }
+  .agent-badge.contested { background:rgba(212,168,67,0.7); color:#0a0e17; }
+  .paths-compare { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:1.5rem 0; }
+  @media(max-width:600px){ .paths-compare{grid-template-columns:1fr;} }
+  .path-card { padding:1.5rem; border:1px solid rgba(255,255,255,0.08); }
+  .path-card.path-human { border-color:rgba(212,168,67,0.3); }
+  .path-card.path-agent { border-color:rgba(0,200,150,0.3); }
+  .path-card-label { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:1rem; }
+  .path-human .path-card-label { color:var(--gold); }
+  .path-agent .path-card-label { color:#00c896; }
+  .path-step { display:flex; align-items:center; gap:0.5rem; padding:0.4rem 0; font-size:0.82rem; color:rgba(200,214,229,0.7); }
+  .path-arrow { color:rgba(255,255,255,0.2); font-size:0.7rem; }
+  .toggle-product-selector { display:flex; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+  .toggle-product-btn { font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.1em; padding:0.5rem 1rem; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:rgba(200,214,229,0.6); cursor:pointer; transition:all 0.3s; }
+  .toggle-product-btn.active { background:rgba(0,200,150,0.1); border-color:#00c896; color:#00c896; }
+  .toggle-buyer { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; }
+  .toggle-switch { position:relative; width:56px; height:28px; background:rgba(212,168,67,0.3); border-radius:14px; cursor:pointer; transition:background 0.4s; flex-shrink:0; }
+  .toggle-switch.agent-mode { background:rgba(0,200,150,0.4); }
+  .toggle-knob { position:absolute; top:3px; left:3px; width:22px; height:22px; background:white; border-radius:50%; transition:transform 0.3s; }
+  .toggle-switch.agent-mode .toggle-knob { transform:translateX(28px); }
+  .toggle-label { font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; transition:color 0.3s; }
+  .factor-bars { margin-top:1rem; }
+  .factor-row { display:grid; grid-template-columns:140px 1fr 50px; gap:0.75rem; align-items:center; padding:0.5rem 0; font-size:0.82rem; }
+  @media(max-width:600px){ .factor-row{grid-template-columns:100px 1fr 40px; font-size:0.75rem;} }
+  .factor-name { color:rgba(200,214,229,0.7); }
+  .factor-bar-track { height:6px; background:rgba(255,255,255,0.06); position:relative; overflow:hidden; }
+  .factor-bar-fill { height:100%; transition:width 0.8s cubic-bezier(0.4,0,0.2,1),background 0.5s; position:absolute; left:0; top:0; }
+  .factor-pct { font-family:var(--font-mono); font-size:0.7rem; color:rgba(200,214,229,0.5); text-align:right; }
+  .hyp-tag { display:inline-block; font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.1em; padding:0.1rem 0.4rem; background:rgba(0,200,150,0.15); color:#00c896; margin-left:0.5rem; vertical-align:middle; }
+  .cl-meter { margin:2rem 0; padding:1.5rem; border:1px solid rgba(255,255,255,0.08); background:rgba(0,0,0,0.2); }
+  .cl-meter-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.75rem; }
+  .cl-meter-title { font-family:var(--font-display); font-size:1.1rem; color:#fff; }
+  .cl-slider-wrap { display:flex; align-items:center; gap:0.75rem; }
+  .cl-slider-label { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; color:rgba(200,214,229,0.5); text-transform:uppercase; white-space:nowrap; }
+  .cl-slider { -webkit-appearance:none; width:160px; height:4px; background:rgba(255,255,255,0.1); outline:none; border-radius:2px; }
+  .cl-slider::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; background:#00c896; border-radius:50%; cursor:pointer; }
+  .cl-brands-area { display:flex; gap:8px; flex-wrap:wrap; min-height:60px; align-items:center; padding:1rem 0; transition:all 0.5s; }
+  .cl-brand-chip { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.05em; padding:0.35rem 0.7rem; border:1px solid rgba(255,255,255,0.15); color:rgba(200,214,229,0.7); transition:all 0.5s; white-space:nowrap; }
+  .cl-brand-chip.new-entry { border-color:#00c896; color:#00c896; background:rgba(0,200,150,0.08); }
+  .cl-brand-chip.fading { opacity:0.25; border-color:rgba(255,255,255,0.05); color:rgba(200,214,229,0.25); }
+  .cl-brand-chip.locked { border-color:rgba(192,57,43,0.4); color:rgba(192,57,43,0.7); background:rgba(192,57,43,0.06); }
+  .cl-direction-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; margin-top:0.5rem; transition:color 0.5s; }
+  .provocation { padding:1.5rem; border-left:3px solid rgba(0,200,150,0.3); margin:1rem 0; font-family:var(--font-display); font-size:1rem; font-style:italic; color:rgba(200,214,229,0.8); line-height:1.6; }
+  .agent-closing { text-align:center; padding:3rem 2rem; border-top:1px solid rgba(255,255,255,0.06); }
+  .agent-closing-quote { font-family:var(--font-display); font-size:clamp(1.1rem,2.5vw,1.5rem); font-style:italic; color:rgba(255,255,255,0.85); max-width:650px; margin:0 auto 2rem; line-height:1.6; }
+  .btn-agent { font-family:var(--font-body); font-size:0.9rem; font-weight:600; padding:0.75rem 1.75rem; background:#00c896; color:#0a0e17; border:none; cursor:pointer; transition:all 0.3s; margin-top:1rem; }
+  .btn-agent:hover { background:#00e6a8; transform:translateY(-1px); }
+  .btn-back { font-family:var(--font-body); font-size:0.85rem; font-weight:500; padding:0.65rem 1.5rem; background:transparent; border:1px solid rgba(255,255,255,0.2); color:rgba(200,214,229,0.6); cursor:pointer; transition:all 0.3s; margin-right:1rem; }
+  .btn-back:hover { border-color:rgba(255,255,255,0.4); color:white; }
+</style>
+</head>
+<body>
+
+
+<!-- ════════ HERO ════════ -->
+<div class="hero" id="hero">
+  <div class="hero-label fade-up">Interactive Learning Experience</div>
+  <h1 class="fade-up delay-1">The Copywriting <em>Lab</em></h1>
+  <p class="hero-sub fade-up delay-2">Learn the 7 Laws that separate copy that sells from copy that just sits there. Then test yourself: can you tell human-written iconic ads from AI-rewritten versions?</p>
+  <button class="btn-start fade-up delay-3" onclick="startLaws()">Begin the Lab →</button>
+</div>
+
+<!-- ════════ NAV ════════ -->
+<div class="nav-bar" id="navbar" style="display:none;">
+  <div class="nav-title">The Copywriting Lab</div>
+  <div class="nav-progress" id="navProgress"></div>
+</div>
+
+<!-- ════════ LAWS SECTION ════════ -->
+<div class="section" id="lawsSection">
+  <div class="section-inner">
+    <div class="section-label">Part I — The Framework</div>
+    <div class="section-title">7 Laws of Copy That Sells</div>
+    <p class="section-intro">These aren't suggestions. They're the principles behind every great ad ever written — from Ogilvy's Rolls-Royce to Apple's "Think Different." Click each law to expand.</p>
+
+    <div class="laws-grid" id="lawsGrid"></div>
+
+    <button class="btn-continue" onclick="startQuiz()">Now Test Yourself — The Blind Copy Test →</button>
+  </div>
+</div>
+
+<!-- ════════ QUIZ SECTION ════════ -->
+<div class="section" id="quizSection">
+  <div class="section-inner">
+    <div class="section-label">Part II — The Blind Test</div>
+    <div class="section-title">Human or AI?</div>
+    <p class="section-intro">Below are iconic ads — but one version is the original, and the other has been rewritten by AI. Can you spot which is which?</p>
+
+    <div class="quiz-header">
+      <div class="quiz-counter" id="quizCounter">Round 1 of 8</div>
+      <div class="quiz-score-bar" id="scorePips"></div>
+    </div>
+
+    <div id="quizArea"></div>
+  </div>
+</div>
+
+<!-- ════════ RESULTS ════════ -->
+<div class="results-section" id="resultsSection">
+  <div class="results-inner">
+    <div class="results-score">
+      <div class="section-label" style="color:var(--gold);">Final Results</div>
+      <div class="results-number" id="finalScore">0</div>
+      <div class="results-of" id="finalOf">out of 8 correct</div>
+      <div class="results-verdict" id="finalVerdict"></div>
+    </div>
+
+    <div class="results-breakdown" id="resultsBreakdown"></div>
+
+    <div class="coca-cola-callout">
+      <h3>The Coca-Cola Lesson</h3>
+      <p>In 2024 and 2025, Coca-Cola used generative AI to remake its iconic "Holidays Are Coming" ad. Both attempts faced public backlash — viewers called the results "soulless" and "creepy." Five AI specialists spent a month generating 70,000 video clips. The result? Audiences rejected it.<br><br>
+      The lesson isn't that AI is bad at copy. It's that great copy needs <strong>emotional truth</strong>, <strong>specificity</strong>, and <strong>human stakes</strong>. AI can mimic structure but struggles with Laws 2 (momentum), 4 (specificity), and 7 (selling, not just describing). The brands that failed with AI in 2025 — McDonald's, H&M, Vogue — all made the same mistake: they replaced the human voice instead of augmenting it.</p>
+    </div>
+
+    <div class="takeaway-box">
+      <h3>The Takeaway for Your Career</h3>
+      <p>AI will write first drafts faster than you ever could. That's not your competition. Your competitive advantage is the ability to <em>diagnose</em> why copy fails, apply frameworks like the 7 Laws to fix it, and inject the emotional specificity that makes someone stop scrolling. The copywriter's job isn't disappearing — it's evolving from writer to <strong>editor, strategist, and quality controller</strong>.</p>
+    </div>
+
+    <button class="btn-restart" onclick="restart()">↺ Run the Lab Again</button>
+    <button class="btn-agent" onclick="openAgentSection()" style="margin-right:1rem;">Part III: The Agent Economy →</button>
+    <button class="btn-restart" onclick="restart()">↺ Run the Lab Again</button>
+    <div class="credit">Prof. Dr. Markus Rach · Canadian University Dubai</div>
+  </div>
+</div>
+
+<!-- ════════ PART III: AGENT ECONOMY ════════ -->
+<div class="agent-section" id="agentSection">
+
+  <div class="agent-hero">
+    <div class="agent-label">Part III — Beyond Human Readers</div>
+    <h2>The Agent Economy</h2>
+    <p class="agent-hero-sub">You just learned to write for humans. But what happens when the buyer isn't reading at all?</p>
+  </div>
+
+  <!-- BEAT 1: THE SPLIT -->
+  <div class="agent-block">
+    <div class="agent-block-label">Beat 1 — The Split</div>
+    <h3>Not All Purchases Are Equal</h3>
+    <p>AI agents are already handling routine purchases — reordering supplies, comparing insurance, selecting the cheapest compatible printer ink. But they're not booking honeymoons or choosing birthday gifts. The divide is structural: <strong>functional purchases</strong> are being automated first. <strong>Hedonic purchases</strong> remain human.</p>
+    <div class="agent-cite">H6 (Rach, 2026): "The substitution effect and choice liquidity are stronger for utilitarian products and high-risk purchase contexts than for hedonic products and low-risk contexts."</div>
+
+    <div class="split-viz">
+      <div class="split-side split-functional">
+        <div class="split-header">Functional / Utilitarian</div>
+        <div class="split-item"><span class="split-item-name">Printer ink</span> <span class="agent-badge taken">Agent</span></div>
+        <div class="split-item"><span class="split-item-name">Laundry detergent</span> <span class="agent-badge taken">Agent</span></div>
+        <div class="split-item"><span class="split-item-name">Office supplies</span> <span class="agent-badge taken">Agent</span></div>
+        <div class="split-item"><span class="split-item-name">Car insurance</span> <span class="agent-badge contested">Contested</span></div>
+        <div class="split-item"><span class="split-item-name">Groceries (staples)</span> <span class="agent-badge contested">Contested</span></div>
+        <div class="split-item"><span class="split-item-name">Cloud storage</span> <span class="agent-badge taken">Agent</span></div>
+      </div>
+      <div class="split-side split-hedonic">
+        <div class="split-header">Hedonic / Experiential</div>
+        <div class="split-item"><span class="split-item-name">Perfume</span> <span class="agent-badge human">Human</span></div>
+        <div class="split-item"><span class="split-item-name">Sneakers</span> <span class="agent-badge human">Human</span></div>
+        <div class="split-item"><span class="split-item-name">Vacation</span> <span class="agent-badge human">Human</span></div>
+        <div class="split-item"><span class="split-item-name">Wine</span> <span class="agent-badge contested">Contested</span></div>
+        <div class="split-item"><span class="split-item-name">Restaurant</span> <span class="agent-badge human">Human</span></div>
+        <div class="split-item"><span class="split-item-name">Concert tickets</span> <span class="agent-badge human">Human</span></div>
+      </div>
+    </div>
+    <p>The "contested" zone is where the next decade of marketing strategy will be fought. Wine can be selected by specs (region, rating, price) or by story (the vineyard you visited on holiday). Groceries can be auto-replenished — until someone wants to cook something new. The boundary is fluid, and it moves as agent capabilities improve.</p>
+  </div>
+
+  <!-- BEAT 2: ATTENTION IS DEAD -->
+  <div class="agent-block">
+    <div class="agent-block-label">Beat 2 — The Inversion</div>
+    <h3>Attention Is Dead. Long Live Exposure.</h3>
+    <p>Every law you learned in Part I is built on one assumption: <strong>human attention is scarce</strong>. You have 1.5 seconds. Headlines carry 80% of the weight. Every sentence must earn the next. But agents don't skim. They read everything. They don't get bored. They don't scroll past. For a machine, <strong>exposure equals attention</strong>.</p>
+    <p>This inverts the entire logic of advertising. Your dual-pathway framework shows why:</p>
+
+    <div class="paths-compare">
+      <div class="path-card path-human">
+        <div class="path-card-label">Path 1 — Brand-Equity Route (Human)</div>
+        <div class="path-step">Brand equity</div>
+        <div class="path-step"><span class="path-arrow">↓</span></div>
+        <div class="path-step">Brand trust</div>
+        <div class="path-step"><span class="path-arrow">↓</span></div>
+        <div class="path-step">Purchase intention</div>
+        <div style="margin-top:1rem;font-size:0.78rem;color:rgba(212,168,67,0.6);">Decades of memory-building.<br>Emotional association. Recognition.<br>Headlines matter. Copy matters.</div>
+      </div>
+      <div class="path-card path-agent">
+        <div class="path-card-label">Path 2 — AI-Mediated Route (Agent)</div>
+        <div class="path-step">AI trust</div>
+        <div class="path-step"><span class="path-arrow">↓</span></div>
+        <div class="path-step">Brand trust (via trust transfer) <span class="hyp-tag">H1</span></div>
+        <div class="path-step"><span class="path-arrow">↓</span></div>
+        <div class="path-step">Dynamic consideration set <span class="hyp-tag">H3</span></div>
+        <div class="path-step"><span class="path-arrow">↓</span></div>
+        <div class="path-step">Choice liquidity <span class="hyp-tag">H4</span></div>
+        <div class="path-step"><span class="path-arrow">↓</span></div>
+        <div class="path-step">Brand switching / loyalty</div>
+        <div style="margin-top:1rem;font-size:0.78rem;color:rgba(0,200,150,0.5);">Trust transfers from the AI to the brand.<br>The agent reshuffles your shortlist.<br>Headlines are irrelevant. Data is everything.</div>
+      </div>
+    </div>
+
+    <div class="agent-cite">Rach, M. (2026). Algorithmic Trust and Choice Liquidity: A Dual-Pathway Framework. ICAIMT 2026 Proceedings.</div>
+  </div>
+
+  <!-- BEAT 3: WHAT TRIGGERS MACHINE CHOICE -->
+  <div class="agent-block">
+    <div class="agent-block-label">Beat 3 — The Decision Flip</div>
+    <h3>What Triggers Machine Choice?</h3>
+    <p>Select a product. Then toggle between a human buyer and an agent buyer. Watch the decision factors rearrange.</p>
+
+    <div class="toggle-product-selector" id="productSelector">
+      <button class="toggle-product-btn active" onclick="selectProduct(0)">Running Shoes</button>
+      <button class="toggle-product-btn" onclick="selectProduct(1)">Printer Ink</button>
+      <button class="toggle-product-btn" onclick="selectProduct(2)">Weekend Trip</button>
+    </div>
+
+    <div class="toggle-buyer">
+      <span class="toggle-label" id="labelHuman" style="color:var(--gold);">Human Buyer</span>
+      <div class="toggle-switch" id="buyerToggle" onclick="toggleBuyer()">
+        <div class="toggle-knob"></div>
+      </div>
+      <span class="toggle-label" id="labelAgent" style="color:rgba(200,214,229,0.3);">Agent Buyer</span>
+    </div>
+
+    <div class="factor-bars" id="factorBars"></div>
+  </div>
+
+  <!-- BEAT 4: CHOICE LIQUIDITY -->
+  <div class="agent-block">
+    <div class="agent-block-label">Beat 4 — Choice Liquidity</div>
+    <h3>Your Consideration Set Is Being Restructured</h3>
+    <p>Choice liquidity is the algorithmically driven reconfiguration of which brands you even consider — across repeated purchase episodes. It's not switching. It's the structural condition that makes switching possible. And it's bidirectional.</p>
+
+    <div class="cl-meter">
+      <div class="cl-meter-header">
+        <div class="cl-meter-title">Choice Liquidity Meter</div>
+        <div class="cl-slider-wrap">
+          <span class="cl-slider-label">Trust calibration</span>
+          <input type="range" class="cl-slider" id="clSlider" min="0" max="100" value="50" oninput="updateCLMeter(this.value)">
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:0.25rem;">
+        <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.1em;color:rgba(192,57,43,0.5);">UNCONDITIONAL TRUST</span>
+        <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.1em;color:rgba(0,200,150,0.5);">CALIBRATED TRUST</span>
+      </div>
+      <div class="cl-brands-area" id="clBrands"></div>
+      <div class="cl-direction-label" id="clDirectionLabel"></div>
+    </div>
+
+    <div class="agent-cite">H4: "Repeated reliance on AI recommendations increases choice liquidity — manifesting as both expansion and echo-chamber narrowing depending on trust calibration." — H7: "Transparency, explainability, and user control moderate trust transfer; calibrated trust reduces echo-chamber narrowing."</div>
+
+    <p>For high-equity brands, this is <strong>amplification</strong> — AI trust reinforces existing brand equity (H2). For low-equity brands, it's <strong>substitution</strong> — AI trust compensates for weak brand associations. The strategic implication: if you're an incumbent, agents may protect you. If you're a challenger, agents may be your best distribution channel — provided your data is machine-readable.</p>
+  </div>
+
+  <!-- PROVOCATIONS -->
+  <div class="agent-block" style="border-bottom:none;">
+    <div class="agent-block-label">The Open Questions</div>
+    <h3>Three Provocations for Discussion</h3>
+
+    <div class="provocation">1. If agent-mediated purchase decisions follow the AI-mediated route rather than the brand-equity route, what is the residual function of brand equity in utilitarian categories?</div>
+    <div class="provocation">2. Does choice liquidity favor incumbents (amplification for high-equity brands) or challengers (substitution for low-equity brands) — and does that answer change when the buyer is a machine?</div>
+    <div class="provocation">3. If attention is no longer scarce for the buyer, is the entire edifice of advertising — built on the assumption of attention scarcity — structurally obsolete for functional categories?</div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="agent-closing">
+    <div class="agent-closing-quote">"The laws you just learned were written for a reader. The reader is leaving. The question isn't whether to write for humans or machines — it's whether brands, as we understand them, survive the handover."</div>
+    <button class="btn-back" onclick="backToResults()">← Back to Results</button>
+    <button class="btn-agent" onclick="restart()">↺ Start Over</button>
+    <div class="credit" style="color:rgba(200,214,229,0.25);">Prof. Dr. Markus Rach · Canadian University Dubai · ICAIMT 2026</div>
+  </div>
+
+</div>
+
+<script>
+// ─── DATA: 7 LAWS ───
+const laws = [
+  {
+    number: "I",
+    title: "The headline carries 80% of the weight.",
+    subtitle: "Ogilvy's most famous insight",
+    detail: "Five times as many people read the headline as read the body copy. When you've written your headline, you've spent eighty cents out of your dollar. In feed-based media, this is even more extreme — you have 1 to 1.5 seconds before the thumb scrolls past.",
+    exampleBad: "Our New Product Is Here",
+    exampleGood: "At 60 miles an hour, the loudest noise in this new Rolls-Royce comes from the electric clock.",
+    exampleNote: "Ogilvy's Rolls-Royce headline — absurdly specific, benefit-driven, impossible to ignore."
+  },
+  {
+    number: "II",
+    title: "Every sentence has one job: make them read the next one.",
+    subtitle: "Joseph Sugarman's 'Slippery Slide'",
+    detail: "Great copy creates momentum. The first sentence's only purpose is to get them to read the second. The second exists to carry them to the third. Each line should create a tiny open loop that the reader must close by reading on. This reframes copy from information delivery to attention architecture.",
+    exampleBad: "We offer many great features. Our product is high quality. Customers love us.",
+    exampleGood: "You're reading this sentence. Now you're reading this one. You can't stop. That's the slippery slide.",
+    exampleNote: "Notice how each sentence creates just enough curiosity to pull you forward."
+  },
+  {
+    number: "III",
+    title: "Sell the benefit, not the feature.",
+    subtitle: "The FAB hierarchy: Features → Advantages → Benefits",
+    detail: "Nobody buys a drill — they buy a hole in the wall. Nobody buys a mattress — they buy a good night's sleep. Features are what a product has. Advantages are why that matters. Benefits are how it changes your life. Most weak copy stops at features. Great copy starts at benefits.",
+    exampleBad: "8GB RAM, 256GB SSD, 15-hour battery",
+    exampleGood: "Edit 4K video on the train without ever hunting for a power outlet.",
+    exampleNote: "The specs haven't changed — but the reader can now see themselves in the story."
+  },
+  {
+    number: "IV",
+    title: "Specificity beats cleverness.",
+    subtitle: "Concrete details build credibility",
+    detail: "\"Saves you time\" is forgettable. \"Saves you 3 hours every week\" is believable. Specific numbers, names, and details create trust because they signal that someone actually measured, tested, and verified. Cleverness impresses other copywriters. Specificity persuades customers.",
+    exampleBad: "Our customers love our product.",
+    exampleGood: "11,437 five-star reviews. Average delivery: 2.1 days.",
+    exampleNote: "The odd number (11,437 not '10,000+') feels real. Round numbers feel invented."
+  },
+  {
+    number: "V",
+    title: "Write like you talk. Then edit.",
+    subtitle: "Ogilvy's memo rule",
+    detail: "Jargon kills connection. The consumer isn't an idiot — they're your customer, scrolling at 2am in bed. Write your first draft the way you'd explain it to a friend. Then cut 30%. If you wouldn't say it out loud, don't write it. As Ogilvy put it: 'Use their language.'",
+    exampleBad: "Leverage our proprietary solution to reconceptualize your workflow paradigm.",
+    exampleGood: "We'll help you get more done in less time. Here's how.",
+    exampleNote: "Read both aloud. The second sounds like a human being. The first sounds like a press release."
+  },
+  {
+    number: "VI",
+    title: "One message per ad.",
+    subtitle: "The moment you try to say two things, you say nothing",
+    detail: "The fastest way to weaken an ad is to add a second message. Audiences don't read carefully — they scan, absorb a feeling, and move on. If your ad tries to be about quality AND price AND sustainability AND innovation, it's about nothing. Pick one. Commit. Say it memorably.",
+    exampleBad: "Fast, affordable, eco-friendly, and available in 12 colors!",
+    exampleGood: "Just Do It.",
+    exampleNote: "Three words. One idea. Universally understood. Nike could have listed features — instead they sold a feeling."
+  },
+  {
+    number: "VII",
+    title: "If it doesn't sell, it isn't creative.",
+    subtitle: "Ogilvy's hardest truth",
+    detail: "Entertainment without conversion is an expensive hobby. Awards without results are vanity metrics. The purpose of copy is to change behavior — to make someone click, call, buy, believe, or share. Humor, beauty, and surprise are tools, not goals. If the audience laughed but didn't buy, the copy failed.",
+    exampleBad: "A beautifully produced, visually stunning brand film that no one remembers the product from.",
+    exampleGood: "An ugly, text-heavy landing page that converts at 8.8%.",
+    exampleNote: "The internet's best-converting pages are often the ugliest. Copy that sells beats copy that dazzles."
+  }
+];
+
+// ─── DATA: QUIZ ROUNDS ───
+const quizRounds = [
+  {
+    brand: "Rolls-Royce · Print Ad (1959)",
+    context: "David Ogilvy's legendary car ad. Which is the original headline?",
+    optionA: {
+      text: "At 60 miles an hour the loudest noise in this new Rolls-Royce comes from the electric clock.",
+      isHuman: true
+    },
+    optionB: {
+      text: "Experience unparalleled luxury and whisper-quiet engineering in the all-new Rolls-Royce — where every journey becomes an exquisite escape.",
+      isHuman: false
+    },
+    explanation: "Ogilvy's original is specific (60 mph, electric clock) and lets the reader draw the conclusion about quality. The AI version uses vague luxury adjectives — 'unparalleled,' 'exquisite' — that could describe any premium brand. Law IV in action: specificity beats cleverness.",
+    lawRef: "IV"
+  },
+  {
+    brand: "Apple · Think Different Campaign (1997)",
+    context: "Apple's comeback campaign copy. Which version is the original?",
+    optionA: {
+      text: "At Apple, we believe that people with passion have the power to transform the world for the better. Our innovative technology is designed for the dreamers and visionaries who dare to think outside the box.",
+      isHuman: false
+    },
+    optionB: {
+      text: "Here's to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently.",
+      isHuman: true
+    },
+    explanation: "The original uses short, punchy fragments — each one a micro-headline. The AI version retreats to safe corporate language ('innovative technology,' 'think outside the box'). The original creates momentum through rhythm (Law II: slippery slide) and never once mentions a product (Law VII: selling a belief, not a spec).",
+    lawRef: "II, VII"
+  },
+  {
+    brand: "Volkswagen · Print Ad (1960s)",
+    context: "DDB's revolutionary Volkswagen campaign. Which is the original headline?",
+    optionA: {
+      text: "Think small.",
+      isHuman: true
+    },
+    optionB: {
+      text: "Big things come in small packages. Discover the Volkswagen Beetle — the smart choice for drivers who know that less is more.",
+      isHuman: false
+    },
+    explanation: "Two words. That's all DDB needed. The AI version uses a cliché ('big things come in small packages') and explains the joke — always a fatal move in copy. The original is brave enough to trust the audience. Law VI: one message, delivered with conviction.",
+    lawRef: "VI"
+  },
+  {
+    brand: "De Beers · Tagline (1947)",
+    context: "One of the most successful taglines in advertising history. Which is original?",
+    optionA: {
+      text: "A timeless symbol of love and commitment — because your love story deserves nothing less than the brilliance of a genuine diamond.",
+      isHuman: false
+    },
+    optionB: {
+      text: "A diamond is forever.",
+      isHuman: true
+    },
+    explanation: "Four words that created an entire cultural norm around engagement rings. The AI version drowns the idea in qualifiers ('timeless,' 'genuine,' 'brilliance') — ironic, since the original already achieved timelessness through economy. Law I: the weight of the message is inversely proportional to the number of words.",
+    lawRef: "I, VI"
+  },
+  {
+    brand: "Economist · Poster Campaign (2000s)",
+    context: "The Economist's famously witty recruitment-style ads. Which is the original?",
+    optionA: {
+      text: "\"I never read The Economist.\" — Management trainee. Aged 42.",
+      isHuman: true
+    },
+    optionB: {
+      text: "Stay informed. Stay ahead. Subscribe to The Economist and join the leaders who make smarter decisions every day.",
+      isHuman: false
+    },
+    explanation: "The original sells through implication and wit — the reader constructs the argument themselves ('this person didn't read it and look where they ended up'). The AI version just tells you to subscribe. Law III: the benefit (career success) is implied, not stated, making it far more powerful.",
+    lawRef: "III, VII"
+  },
+  {
+    brand: "Nike · Long Copy Ad (1990s)",
+    context: "A Nike women's campaign print ad. Which captures the original voice?",
+    optionA: {
+      text: "You do not have to be your mother unless she is who you want to be. You do not have to be your mother's mother. You do not have to be anyone except who you choose.",
+      isHuman: true
+    },
+    optionB: {
+      text: "Be inspired to forge your own path. At Nike, we celebrate the powerful women who refuse to be defined by expectations — because your story is yours to write.",
+      isHuman: false
+    },
+    explanation: "The original reads like a conversation — intimate, rhythmic, almost poetic. It never mentions Nike, shoes, or athletic performance. The AI version immediately pivots to brand messaging ('At Nike, we celebrate...'). Law V: write like a human talks to another human, not like a brand talks at a consumer.",
+    lawRef: "V, II"
+  },
+  {
+    brand: "Avis · Print Campaign (1962)",
+    context: "DDB's iconic campaign for the #2 car rental company. Which is original?",
+    optionA: {
+      text: "Why settle for second best? At Avis, we offer the same premium car rental experience as the leading brands — with competitive pricing and exceptional customer service.",
+      isHuman: false
+    },
+    optionB: {
+      text: "We're only No. 2. We try harder.",
+      isHuman: true
+    },
+    explanation: "The original turns a weakness into a selling proposition in just seven words. The AI version is defensive — 'why settle for second best?' actually reminds you they ARE second. Law IV: the specific admission ('No. 2') is more credible than any generic claim of quality. Vulnerability is persuasive.",
+    lawRef: "IV, VI"
+  },
+  {
+    brand: "Coca-Cola · Holiday Campaign (2024/2025 — AI-Generated)",
+    context: "This is the twist round. Coca-Cola used AI for its holiday campaign. Which reflects the AI-era approach vs. the classic original?",
+    optionA: {
+      text: "Holidays are coming. Holidays are coming.",
+      isHuman: true
+    },
+    optionB: {
+      text: "This holiday season, share the joy of togetherness. Celebrate magical moments with the ones who matter most — and the refreshing taste that brings everyone together.",
+      isHuman: false
+    },
+    explanation: "The original is pure simplicity — a repeated phrase paired with the visual of red trucks in the snow. The AI-era version is what Coca-Cola's AI-generated campaigns actually sounded like: generic, over-explained, and emotionally hollow. In 2024–2025, audiences rejected Coca-Cola's AI holiday ads as 'soulless.' Proof that Law VII cuts both ways: even the world's biggest brand can't automate emotional truth.",
+    lawRef: "I, VI, VII"
+  }
+];
+
+// ─── STATE ───
+let currentRound = 0;
+let selectedOption = null;
+let answers = [];
+let quizRevealed = false;
+
+// ─── RENDER LAWS ───
+function renderLaws() {
+  const grid = document.getElementById('lawsGrid');
+  grid.innerHTML = laws.map((law, i) => `
+    <div class="law-card fade-up delay-${i+1}" onclick="toggleLaw(this)">
+      <div class="law-number">${law.number}</div>
+      <div>
+        <div class="law-title">${law.title}</div>
+        <div class="law-subtitle">${law.subtitle}</div>
+      </div>
+      <div class="law-detail">
+        <p>${law.detail}</p>
+        <div class="law-example">
+          <strong>Example</strong>
+          <span class="law-bad">✗ ${law.exampleBad}</span><br>
+          <span class="law-good">✓ ${law.exampleGood}</span>
+          <p style="margin-top:0.5rem;font-size:0.82rem;color:#777;">${law.exampleNote}</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleLaw(el) {
+  el.classList.toggle('expanded');
+}
+
+// ─── NAVIGATION ───
+function startLaws() {
+  document.getElementById('hero').style.display = 'none';
+  document.getElementById('navbar').style.display = 'flex';
+  document.getElementById('lawsSection').classList.add('active');
+  renderLaws();
+  updateNav('laws');
+}
+
+function startQuiz() {
+  document.getElementById('lawsSection').classList.remove('active');
+  document.getElementById('quizSection').classList.add('active');
+  currentRound = 0;
+  answers = [];
+  renderQuizRound();
+  renderScorePips();
+  updateNav('quiz');
+}
+
+function updateNav(phase) {
+  document.getElementById('navProgress').innerHTML = `
+    <div class="nav-dot ${phase === 'laws' ? 'active' : (['quiz','results','agent'].includes(phase) ? 'done' : '')}"></div>
+    <div class="nav-dot ${phase === 'quiz' ? 'active' : (['results','agent'].includes(phase) ? 'done' : '')}"></div>
+    <div class="nav-dot ${phase === 'results' ? 'active' : (phase === 'agent' ? 'done' : '')}"></div>
+    <div class="nav-dot ${phase === 'agent' ? 'active' : ''}"></div>
+  `;
+}
+
+// ─── QUIZ RENDERING ───
+function renderScorePips() {
+  const bar = document.getElementById('scorePips');
+  bar.innerHTML = quizRounds.map((_, i) => `<div class="score-pip" id="pip-${i}"></div>`).join('');
+}
+
+function renderQuizRound() {
+  const round = quizRounds[currentRound];
+  document.getElementById('quizCounter').textContent = `Round ${currentRound + 1} of ${quizRounds.length}`;
+  selectedOption = null;
+  quizRevealed = false;
+
+  // Randomize which side A and B appear on
+  const swap = Math.random() > 0.5;
+  const left = swap ? round.optionB : round.optionA;
+  const right = swap ? round.optionA : round.optionB;
+
+  document.getElementById('quizArea').innerHTML = `
+    <div class="quiz-card fade-up">
+      <div class="quiz-brand">${round.brand}</div>
+      <div class="quiz-body">
+        <div class="quiz-prompt">${round.context}</div>
+        <div class="copy-options">
+          <div class="copy-option" id="optLeft" data-human="${left.isHuman}" onclick="selectOption('left')">
+            <div class="copy-option-label">Version A</div>
+            <div class="copy-text">"${left.text}"</div>
+            <span class="origin-badge ${left.isHuman ? 'badge-human' : 'badge-ai'}">${left.isHuman ? '✓ Human Original' : '✗ AI Rewrite'}</span>
+          </div>
+          <div class="copy-option" id="optRight" data-human="${right.isHuman}" onclick="selectOption('right')">
+            <div class="copy-option-label">Version B</div>
+            <div class="copy-text">"${right.text}"</div>
+            <span class="origin-badge ${right.isHuman ? 'badge-human' : 'badge-ai'}">${right.isHuman ? '✓ Human Original' : '✗ AI Rewrite'}</span>
+          </div>
+        </div>
+        <div class="quiz-explanation" id="explanation">
+          <div class="explanation-title">Why — Laws ${round.lawRef}</div>
+          <div class="explanation-text">${round.explanation}</div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn-vote" id="btnVote" onclick="revealAnswer()" disabled>Which one is the Human Original? Select above ↑</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function selectOption(side) {
+  if (quizRevealed) return;
+  selectedOption = side;
+  document.getElementById('optLeft').classList.toggle('selected', side === 'left');
+  document.getElementById('optRight').classList.toggle('selected', side === 'right');
+  const btn = document.getElementById('btnVote');
+  btn.disabled = false;
+  btn.textContent = 'Lock In — Reveal the Answer →';
+}
+
+function revealAnswer() {
+  if (!selectedOption || quizRevealed) return;
+  quizRevealed = true;
+
+  const leftEl = document.getElementById('optLeft');
+  const rightEl = document.getElementById('optRight');
+  const leftIsHuman = leftEl.dataset.human === 'true';
+  const rightIsHuman = rightEl.dataset.human === 'true';
+
+  // Determine correctness
+  const pickedHuman = (selectedOption === 'left' && leftIsHuman) || (selectedOption === 'right' && rightIsHuman);
+  answers.push(pickedHuman);
+
+  // Update pip
+  const pip = document.getElementById(`pip-${currentRound}`);
+  pip.classList.add(pickedHuman ? 'correct' : 'wrong');
+
+  // Reveal badges
+  leftEl.classList.add(leftIsHuman ? 'revealed-correct' : 'revealed-wrong');
+  rightEl.classList.add(rightIsHuman ? 'revealed-correct' : 'revealed-wrong');
+
+  // Show explanation
+  document.getElementById('explanation').classList.add('visible');
+
+  // Swap button
+  const btn = document.getElementById('btnVote');
+  btn.style.display = 'none';
+
+  const actions = btn.parentElement;
+  const resultText = document.createElement('span');
+  resultText.style.cssText = `font-weight:700;font-size:1rem;color:${pickedHuman ? 'var(--green)' : 'var(--red)'}`;
+  resultText.textContent = pickedHuman ? '✓ Correct!' : '✗ Incorrect';
+  actions.prepend(resultText);
+
+  if (currentRound < quizRounds.length - 1) {
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn-next';
+    nextBtn.textContent = 'Next Round →';
+    nextBtn.onclick = () => {
+      currentRound++;
+      renderQuizRound();
+    };
+    actions.appendChild(nextBtn);
+  } else {
+    const finishBtn = document.createElement('button');
+    finishBtn.className = 'btn-next';
+    finishBtn.textContent = 'See Your Results →';
+    finishBtn.onclick = showResults;
+    actions.appendChild(finishBtn);
+  }
+}
+
+// ─── RESULTS ───
+function showResults() {
+  document.getElementById('quizSection').classList.remove('active');
+  document.getElementById('resultsSection').classList.add('active');
+  updateNav('results');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const correct = answers.filter(a => a).length;
+  document.getElementById('finalScore').textContent = correct;
+  document.getElementById('finalOf').textContent = `out of ${quizRounds.length} correct`;
+
+  const verdicts = [
+    { min: 0, max: 2, text: "The rewrites fooled you — but now you know what to look for." },
+    { min: 3, max: 4, text: "Solid instincts. A few subtle ones caught you off guard." },
+    { min: 5, max: 6, text: "Sharp eye — you can feel the differences most people miss." },
+    { min: 7, max: 7, text: "Near-perfect. You read copy like a working professional." },
+    { min: 8, max: 8, text: "Flawless. You have the ear of a great copywriter." }
+  ];
+
+  document.getElementById('finalVerdict').textContent = verdicts.find(v => correct >= v.min && correct <= v.max).text;
+
+  document.getElementById('resultsBreakdown').innerHTML = answers.map((c, i) => `
+    <div class="result-item">
+      <div class="result-icon ${c ? 'correct' : 'wrong'}">${c ? '✓' : '✗'}</div>
+      <div class="result-brand">${quizRounds[i].brand}</div>
+      <div class="result-answer">${c ? 'Correctly identified' : 'Picked the rewrite'}</div>
+    </div>
+  `).join('');
+}
+
+function restart() {
+  document.getElementById('resultsSection').classList.remove('active');
+  document.getElementById('agentSection').classList.remove('active');
+  document.getElementById('hero').style.display = 'flex';
+  document.getElementById('navbar').style.display = 'none';
+  currentRound = 0; answers = []; selectedOption = null;
+  isAgentMode = false;
+  window.scrollTo({ top: 0 });
+}
+
+// ─── PART III: AGENT ECONOMY ───
+const products = [
+  {
+    name: 'Running Shoes',
+    factors: [
+      { name: 'Brand familiarity', human: 38, agent: 5, hyp: 'H2' },
+      { name: 'Emotional appeal', human: 22, agent: 1, hyp: '' },
+      { name: 'Social proof', human: 18, agent: 8, hyp: '' },
+      { name: 'Price', human: 12, agent: 25, hyp: '' },
+      { name: 'Spec match (fit, use)', human: 6, agent: 30, hyp: 'H1' },
+      { name: 'Structured data / API', human: 0, agent: 22, hyp: 'H3' },
+      { name: 'Return policy', human: 4, agent: 9, hyp: '' },
+    ]
+  },
+  {
+    name: 'Printer Ink',
+    factors: [
+      { name: 'Brand familiarity', human: 30, agent: 3, hyp: 'H2' },
+      { name: 'Emotional appeal', human: 2, agent: 0, hyp: '' },
+      { name: 'Social proof', human: 8, agent: 4, hyp: '' },
+      { name: 'Price', human: 28, agent: 35, hyp: '' },
+      { name: 'Spec match (model)', human: 20, agent: 40, hyp: 'H1' },
+      { name: 'Structured data / API', human: 0, agent: 15, hyp: 'H3' },
+      { name: 'Delivery speed', human: 12, agent: 3, hyp: '' },
+    ]
+  },
+  {
+    name: 'Weekend Trip',
+    factors: [
+      { name: 'Brand familiarity', human: 15, agent: 4, hyp: 'H2' },
+      { name: 'Emotional appeal', human: 32, agent: 2, hyp: '' },
+      { name: 'Social proof', human: 22, agent: 12, hyp: '' },
+      { name: 'Price', human: 14, agent: 28, hyp: '' },
+      { name: 'Spec match (dates)', human: 8, agent: 32, hyp: 'H1' },
+      { name: 'Structured data / API', human: 0, agent: 18, hyp: 'H3' },
+      { name: 'Cancellation policy', human: 9, agent: 4, hyp: '' },
+    ]
+  }
+];
+
+let currentProduct = 0;
+let isAgentMode = false;
+
+function selectProduct(idx) {
+  currentProduct = idx;
+  document.querySelectorAll('.toggle-product-btn').forEach((b,i) => b.classList.toggle('active', i === idx));
+  renderFactors();
+}
+
+function toggleBuyer() {
+  isAgentMode = !isAgentMode;
+  const sw = document.getElementById('buyerToggle');
+  sw.classList.toggle('agent-mode', isAgentMode);
+  document.getElementById('labelHuman').style.color = isAgentMode ? 'rgba(200,214,229,0.3)' : 'var(--gold)';
+  document.getElementById('labelAgent').style.color = isAgentMode ? '#00c896' : 'rgba(200,214,229,0.3)';
+  renderFactors();
+}
+
+function renderFactors() {
+  const p = products[currentProduct];
+  const sorted = [...p.factors].sort((a,b) => {
+    const va = isAgentMode ? b.agent - a.agent : b.human - a.human;
+    return va;
+  });
+  const container = document.getElementById('factorBars');
+  container.innerHTML = sorted.map(f => {
+    const val = isAgentMode ? f.agent : f.human;
+    const color = isAgentMode ? '#00c896' : 'var(--gold)';
+    const hypHtml = f.hyp && isAgentMode ? `<span class="hyp-tag">${f.hyp}</span>` : '';
+    return `<div class="factor-row">
+      <div class="factor-name">${f.name}${hypHtml}</div>
+      <div class="factor-bar-track"><div class="factor-bar-fill" style="width:${val}%;background:${color};"></div></div>
+      <div class="factor-pct">${val}%</div>
+    </div>`;
+  }).join('');
+}
+
+// Choice Liquidity Meter
+const clBrandSets = {
+  established: ['Tide', 'Crest', 'Gillette', 'Bounty', 'Duracell'],
+  challengers: ['Grove Co.', 'Bite', 'Supply', 'LastObject', 'Who Gives a Crap', 'Blueland', 'Ethique', 'Meow Meow Tweet'],
+};
+
+function updateCLMeter(val) {
+  val = parseInt(val);
+  const area = document.getElementById('clBrands');
+  const label = document.getElementById('clDirectionLabel');
+  const estab = clBrandSets.established;
+  const chall = clBrandSets.challengers;
+
+  // Low val = unconditional trust (echo chamber), high val = calibrated (expansion)
+  let chips = [];
+  if (val < 25) {
+    // Echo chamber: only 2-3 brands, locked
+    chips = estab.slice(0,2).map(b => `<div class="cl-brand-chip locked">${b}</div>`);
+    label.textContent = '↓ Echo-chamber narrowing — H4 negative direction';
+    label.style.color = 'rgba(192,57,43,0.6)';
+  } else if (val < 50) {
+    chips = estab.slice(0,3).map(b => `<div class="cl-brand-chip">${b}</div>`);
+    chips.push(...chall.slice(0,1).map(b => `<div class="cl-brand-chip fading">${b}</div>`));
+    label.textContent = '↕ Low liquidity — familiar brands dominate';
+    label.style.color = 'rgba(200,214,229,0.4)';
+  } else if (val < 75) {
+    chips = estab.slice(0,4).map(b => `<div class="cl-brand-chip">${b}</div>`);
+    chips.push(...chall.slice(0,3).map(b => `<div class="cl-brand-chip new-entry">${b}</div>`));
+    label.textContent = '↗ Moderate liquidity — challengers entering the set';
+    label.style.color = 'rgba(0,200,150,0.5)';
+  } else {
+    chips = estab.slice(0,3).map(b => `<div class="cl-brand-chip">${b}</div>`);
+    chips.push(...chall.slice(0,5).map(b => `<div class="cl-brand-chip new-entry">${b}</div>`));
+    label.textContent = '↑ Healthy expansion — calibrated trust (H7) enables informed exploration';
+    label.style.color = '#00c896';
+  }
+  area.innerHTML = chips.join('');
+}
+
+function openAgentSection() {
+  document.getElementById('resultsSection').classList.remove('active');
+  document.getElementById('agentSection').classList.add('active');
+  updateNav('agent');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  renderFactors();
+  updateCLMeter(50);
+}
+
+function backToResults() {
+  document.getElementById('agentSection').classList.remove('active');
+  document.getElementById('resultsSection').classList.add('active');
+  updateNav('results');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
